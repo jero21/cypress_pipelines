@@ -1,0 +1,15 @@
+image: node:16 #docker
+
+pipelines:
+  default:
+    - parallel:
+        - step: #Define una unidad de ejecución de compilación. Los pasos se ejecutan en el orden en que aparecen en el  archivo 
+            name: Build and Test Cypress
+            caches:
+              - node
+            script:
+              - apt-get update -y
+              - apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+              - npm install
+              - npm ci
+              - npx cypress run
